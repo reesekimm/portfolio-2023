@@ -1,0 +1,5 @@
+.main-container {
+  @extend %fixed-cover;
+
+  background-color: $color-amber;
+}
