@@ -1,5 +1,3 @@
 .main-container {
-  @extend %fixed-cover;
-
-  background-color: $color-amber;
+  position: relative;
 }

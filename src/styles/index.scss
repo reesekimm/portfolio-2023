@@ -7,5 +7,11 @@
 @import './base/fonts';
 
 @import './shared/text';
+@import './shared/pages';
 
 @import './app';
+
+@import './pages/landing';
+@import './pages/manifesto';
+@import './pages/projects';
+@import './pages/contact';

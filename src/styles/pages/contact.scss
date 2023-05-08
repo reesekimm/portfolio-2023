@@ -1,0 +1,9 @@
+#page__contact {
+  @extend %page;
+
+  background-color: slategray;
+  z-index: 17;
+
+  width: 100vw;
+  border-radius: unset;
+}

@@ -1,0 +1,6 @@
+#page__landing {
+  @extend %page;
+
+  background-color: $color-amber;
+  z-index: 20;
+}
