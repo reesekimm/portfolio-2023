@@ -1,6 +1,7 @@
 #page__projects {
   @extend %page;
 
-  background-color: lightsalmon;
-  z-index: 18;
+  color: $color-white;
+  background-color: $color-black;
+  z-index: 17;
 }

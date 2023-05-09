@@ -3,8 +3,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const pages = document.querySelectorAll('.page')
-
 gsap.set('.page', { position: 'absolute' })
 
 gsap.to('.page', {
@@ -14,8 +12,8 @@ gsap.to('.page', {
     horizontal: true,
     trigger: '.main-container',
     markers: true,
-    end: `${window.innerWidth * pages.length}`,
-    scrub: true,
+    end: '+=550%',
+    scrub: 1,
     pin: true,
   },
 })

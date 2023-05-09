@@ -1,0 +1,6 @@
+#page__about {
+  @extend %page;
+
+  background-color: $color-white;
+  z-index: 18;
+}

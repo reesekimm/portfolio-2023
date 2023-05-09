@@ -1,8 +1,8 @@
 #page__contact {
   @extend %page;
 
-  background-color: slategray;
-  z-index: 17;
+  background-color: $color-white;
+  z-index: 16;
 
   width: 100vw;
   border-radius: unset;
