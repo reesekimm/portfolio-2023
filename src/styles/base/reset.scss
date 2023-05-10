@@ -125,3 +125,11 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+a,
+a:hover,
+a:visited,
+a:active {
+  outline: none;
+  text-decoration: none;
+}
