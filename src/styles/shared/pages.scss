@@ -1,7 +1,11 @@
 %page {
+  @extend %text-18;
+
   width: 120vw;
   height: 100vh;
 
   border-top-right-radius: 40px;
   border-bottom-right-radius: 40px;
+
+  position: absolute;
 }

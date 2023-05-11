@@ -3,4 +3,59 @@
 
   background-color: $color-white;
   z-index: 19;
+
+  display: flex;
+}
+
+.about__image {
+  min-width: 30%;
+  background-color: lightsalmon;
+}
+
+.about__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about__marquee {
+  mix-blend-mode: difference;
+
+  h2 {
+    @extend %text-180;
+
+    color: $color-white;
+    white-space: nowrap;
+    font-variation-settings: 'wght' 100;
+    span {
+      font-variation-settings: 'wght' 800;
+    }
+    div {
+      margin-left: 48vw;
+    }
+  }
+}
+
+.about__greeting {
+  @extend %text-28;
+
+  font-variation-settings: 'wght' 600;
+  margin: 5rem;
+}
+
+.about__container {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-left: 5rem;
+}
+
+.about__item {
+  @extend %text-18;
+
+  width: 18vw;
+  margin-right: 5rem;
+}
+
+.about__item-title {
+  color: $color-gray;
 }
