@@ -16,7 +16,7 @@
 }
 
 .landing__name {
-  @extend %text-140;
+  @extend %text-180;
 
   font-variation-settings: 'wght' 800;
 }
@@ -31,13 +31,11 @@
 
 .role__item {
   line-height: 0;
-
   position: absolute;
   display: inline-block;
   left: 0.6rem;
   top: 0;
-
-  margin-top: 4rem;
+  margin-top: 3rem;
 }
 
 .landing__right {

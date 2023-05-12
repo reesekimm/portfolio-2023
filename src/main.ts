@@ -22,6 +22,16 @@ const pageScrollTween = gsap.to(pages, {
 /**
  * Landing
  */
+const name = document.querySelector('.landing__name')
+const { chars: nameChars } = new SplitType(name)
+const tlName = gsap.timeline()
+
+tlName.from(nameChars, {
+  y: 100,
+  rotateX: -90,
+  opacity: 0,
+  stagger: 0.05,
+})
 
 const roles = document.querySelectorAll('.role__item')
 const tlRoles = gsap.timeline()
