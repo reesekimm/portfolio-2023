@@ -4,4 +4,49 @@
   color: $color-white;
   background-color: $color-black;
   z-index: 20;
+
+  display: flex;
+}
+
+.landing__left {
+  width: 60%;
+  //margin-top: auto;
+  border-top: 1px solid $color-darkgray;
+  padding: 15rem 2rem 2rem;
+}
+
+.landing__name {
+  @extend %text-140;
+
+  font-variation-settings: 'wght' 800;
+}
+
+.landing__roles__container {
+  @extend %text-60;
+
+  padding-top: 4rem;
+}
+
+.role__item {
+  line-height: 0;
+}
+
+.landing__right {
+  width: 23%;
+  height: 100vh;
+  padding-top: 60vh;
+  border-left: 1px solid $color-darkgray;
+  border-right: 1px solid $color-darkgray;
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: calc(23% - 1px);
+    height: 0.5rem;
+    background-color: $color-gray;
+  }
+}
+
+.landing__guide {
+  padding: 2rem;
 }

@@ -23,6 +23,7 @@
   "dependencies": {
     "gsap": "^3.11.5",
     "sass": "^1.62.1",
+    "split-type": "^0.3.3",
     "three": "^0.152.2"
   },
   "packageManager": "yarn@3.3.1"

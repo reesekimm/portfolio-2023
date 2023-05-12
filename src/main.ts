@@ -1,5 +1,6 @@
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import SplitType from 'split-type'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -19,6 +20,40 @@ const pageScrollTween = gsap.to(pages, {
 })
 
 /**
+ * Landing
+ */
+
+// const { words: nameWords } = new SplitType('.landing__name', { types: 'words' })
+
+const roles = gsap.utils.toArray('.role__item')
+
+const tlRoles = gsap.timeline({ repeat: -1, repeatDelay: 0 })
+
+roles.forEach((role) => {
+  const splitedRole = new SplitType(role)
+
+  tlRoles
+    .from(
+      splitedRole.chars,
+      {
+        y: 30,
+        rotateX: -90,
+        stagger: 0.03,
+      },
+      '<'
+    )
+    .to(
+      splitedRole.chars,
+      {
+        y: -30,
+        rotateX: 90,
+        stagger: 0.03,
+      },
+      '<2'
+    )
+})
+
+/**
  * About
  */
 const aboutMarquee = document.querySelector('.about__marquee')
@@ -33,7 +68,6 @@ gsap.to(aboutMarquee, {
     trigger: aboutMarquee,
     start: 'left left+=22%',
     scrub: 1,
-    // markers: { startColor: 'hotpink', endColor: 'blue' },
   },
 })
 
@@ -48,7 +82,6 @@ gsap.from(aboutItems, {
     trigger: aboutContainer,
     start: 'left left+=20%',
     toggleActions: 'play none none reverse',
-    // markers: { startColor: 'pink', endColor: 'purple', indent: 40 },
   },
 })
 
@@ -65,7 +98,6 @@ const tlManifesto = gsap.timeline({
     start: 'right 85%',
     end: 'right 70%',
     scrub: 1,
-    markers: true,
   },
 })
 
