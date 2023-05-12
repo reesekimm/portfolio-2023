@@ -23,35 +23,40 @@ const pageScrollTween = gsap.to(pages, {
  * Landing
  */
 
-// const { words: nameWords } = new SplitType('.landing__name', { types: 'words' })
+const roles = document.querySelectorAll('.role__item')
+const tlRoles = gsap.timeline()
 
-const roles = gsap.utils.toArray('.role__item')
+const duration = 0.5
+const pause = 2
 
-const tlRoles = gsap.timeline({ repeat: -1, repeatDelay: 0 })
+const stagger = duration + pause
+const repeatDelay = stagger * (roles.length - 1) + pause
 
-roles.forEach((role) => {
-  const splitedRole = new SplitType(role)
-
-  tlRoles
-    .from(
-      splitedRole.chars,
-      {
-        y: 30,
-        rotateX: -90,
-        stagger: 0.03,
+tlRoles
+  .from(roles, {
+    y: 90,
+    duration: duration,
+    opacity: 0,
+    stagger: {
+      each: stagger,
+      repeat: -1,
+      repeatDelay: repeatDelay,
+    },
+  })
+  .to(
+    roles,
+    {
+      y: -90,
+      duration: duration,
+      opacity: 0,
+      stagger: {
+        each: stagger,
+        repeat: -1,
+        repeatDelay: repeatDelay,
       },
-      '<'
-    )
-    .to(
-      splitedRole.chars,
-      {
-        y: -30,
-        rotateX: 90,
-        stagger: 0.03,
-      },
-      '<2'
-    )
-})
+    },
+    stagger
+  )
 
 /**
  * About

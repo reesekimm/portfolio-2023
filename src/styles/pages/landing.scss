@@ -10,7 +10,7 @@
 
 .landing__left {
   width: 60%;
-  //margin-top: auto;
+  margin-top: auto;
   border-top: 1px solid $color-darkgray;
   padding: 15rem 2rem 2rem;
 }
@@ -24,11 +24,20 @@
 .landing__roles__container {
   @extend %text-60;
 
-  padding-top: 4rem;
+  position: relative;
+  overflow: hidden;
+  height: 7.5rem;
 }
 
 .role__item {
   line-height: 0;
+
+  position: absolute;
+  display: inline-block;
+  left: 0.6rem;
+  top: 0;
+
+  margin-top: 4rem;
 }
 
 .landing__right {
