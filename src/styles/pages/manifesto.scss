@@ -3,4 +3,63 @@
 
   background-color: $color-amber;
   z-index: 18;
+
+  padding-right: 10rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+
+  overflow: hidden;
+}
+
+.manifesto__container {
+  width: 70%;
+}
+
+.manifesto__item {
+  display: flex;
+  padding: 4rem;
+  margin: 0;
+
+  &:before {
+    content: '';
+    background-color: $color-black;
+    position: absolute;
+    display: block;
+    top: 0;
+    width: 200vw;
+    height: 1px;
+  }
+}
+
+.manifesto__item__number {
+  border: 1px solid $color-black;
+  padding: 0.8rem 2.8rem;
+  border-radius: 4rem;
+  height: fit-content;
+  margin-top: 0.5rem;
+  margin-right: 2rem;
+}
+
+.manifesto__item__title {
+  @extend %text-60;
+
+  font-variation-settings: 'wght' 100;
+
+  span {
+    font-variation-settings: 'wght' 800;
+  }
+}
+
+.manifesto__item__description {
+  margin-top: 1rem;
+}
+
+.manifesto__marquee {
+  @extend %text-180;
+
+  font-variation-settings: 'wght' 800;
+  margin-top: 6rem;
 }

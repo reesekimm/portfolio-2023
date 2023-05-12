@@ -5,10 +5,6 @@ gsap.registerPlugin(ScrollTrigger)
 
 const pages = gsap.utils.toArray('.page')
 
-const aboutMarquee = document.querySelector('.about__marquee')
-const aboutContainer = document.querySelector('.about__container')
-const aboutItems = document.querySelectorAll('.about__item')
-
 const pageScrollTween = gsap.to(pages, {
   xPercent: -100,
   stagger: 0.6,
@@ -18,9 +14,16 @@ const pageScrollTween = gsap.to(pages, {
     end: '+=550%',
     scrub: 1,
     pin: true,
-    markers: true,
+    markers: false,
   },
 })
+
+/**
+ * About
+ */
+const aboutMarquee = document.querySelector('.about__marquee')
+const aboutContainer = document.querySelector('.about__container')
+const aboutItems = document.querySelectorAll('.about__item')
 
 gsap.set(aboutMarquee, { x: -10 })
 gsap.to(aboutMarquee, {
@@ -30,7 +33,7 @@ gsap.to(aboutMarquee, {
     trigger: aboutMarquee,
     start: 'left left+=22%',
     scrub: 1,
-    markers: { startColor: 'hotpink', endColor: 'blue' },
+    // markers: { startColor: 'hotpink', endColor: 'blue' },
   },
 })
 
@@ -45,6 +48,46 @@ gsap.from(aboutItems, {
     trigger: aboutContainer,
     start: 'left left+=20%',
     toggleActions: 'play none none reverse',
-    markers: { startColor: 'pink', endColor: 'purple', indent: 40 },
+    // markers: { startColor: 'pink', endColor: 'purple', indent: 40 },
   },
 })
+
+/**
+ * Manifesto
+ */
+const manifestoMarquee = document.querySelector('.manifesto__marquee')
+const manifestoItems = gsap.utils.toArray('.manifesto__item')
+
+const tlManifesto = gsap.timeline({
+  scrollTrigger: {
+    containerAnimation: pageScrollTween,
+    trigger: '#page__about',
+    start: 'right 85%',
+    end: 'right 70%',
+    scrub: 1,
+    markers: true,
+  },
+})
+
+tlManifesto
+  .fromTo(
+    manifestoMarquee,
+    {
+      translateX: '100rem',
+    },
+    { opacity: 1, translateX: '-50rem' }
+  )
+  .fromTo(
+    manifestoItems,
+    {
+      translateX: (index) => `${index * 30 + 130}rem`,
+    },
+    {
+      stagger: {
+        from: 'end',
+        each: 0.1,
+      },
+      translateX: (index) => `-${(manifestoItems.length - index) * 10}rem`,
+    },
+    '<'
+  )
