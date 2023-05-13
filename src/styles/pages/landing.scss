@@ -11,14 +11,21 @@
 .landing__left {
   width: 60%;
   margin-top: auto;
-  border-top: 1px solid $color-darkgray;
-  padding: 15rem 2rem 2rem;
+
+  &:before {
+    content: '';
+    background-color: $color-darkgray;
+    position: absolute;
+    height: 0.1rem;
+    width: 60%;
+  }
 }
 
 .landing__name {
   @extend %text-180;
 
   font-variation-settings: 'wght' 800;
+  padding-top: 10rem;
 }
 
 .landing__roles__container {
@@ -44,16 +51,19 @@
   padding-top: 60vh;
   border-left: 1px solid $color-darkgray;
   border-right: 1px solid $color-darkgray;
+  position: relative;
+  overflow: hidden;
+}
+
+.landing__introduction {
+  --x: -101%;
 
   &:before {
     content: '';
     position: absolute;
-    width: calc(23% - 1px);
-    height: 0.5rem;
+    width: 100%;
+    height: 0.4rem;
     background-color: $color-gray;
+    transform: translate(var(--x), 0);
   }
-}
-
-.landing__guide {
-  padding: 2rem;
 }

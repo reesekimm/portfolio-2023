@@ -24,14 +24,20 @@ const pageScrollTween = gsap.to(pages, {
  */
 const name = document.querySelector('.landing__name')
 const { chars: nameChars } = new SplitType(name)
+const intro = document.querySelector('.landing__introduction')
 const tlName = gsap.timeline()
 
-tlName.from(nameChars, {
-  y: 100,
-  rotateX: -90,
-  opacity: 0,
-  stagger: 0.05,
-})
+tlName
+  .from(nameChars, {
+    y: 100,
+    rotateX: -90,
+    opacity: 0,
+    stagger: 0.05,
+  })
+  .to(intro, {
+    '--x': '0',
+    duration: 1,
+  })
 
 const roles = document.querySelectorAll('.role__item')
 const tlRoles = gsap.timeline()
@@ -122,7 +128,7 @@ tlManifesto
     {
       translateX: '100rem',
     },
-    { opacity: 1, translateX: '-50rem' }
+    { translateX: '-50rem' }
   )
   .fromTo(
     manifestoItems,
