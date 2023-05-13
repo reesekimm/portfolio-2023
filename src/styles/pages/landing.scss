@@ -67,3 +67,32 @@
     transform: translate(var(--x), 0);
   }
 }
+
+.landing__guide {
+  @extend %text-28;
+
+  display: inline-block;
+  padding: 2rem;
+  opacity: 0.5;
+  position: relative;
+  width: 100%;
+}
+
+.landing__arrow {
+  position: absolute;
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+  top: 1.5rem;
+  right: 7rem;
+  animation: bounce 0.5s alternate cubic-bezier(0.4, 0.05, 1, 0.6) infinite;
+}
+
+@keyframes bounce {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(30%);
+  }
+}
