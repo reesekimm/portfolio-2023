@@ -13,9 +13,8 @@ const pageScrollTween = gsap.to(pages, {
   scrollTrigger: {
     trigger: '.main-container',
     end: '+=550%',
-    scrub: 1,
+    scrub: 0.5,
     pin: true,
-    markers: false,
   },
 })
 
@@ -87,8 +86,8 @@ gsap.to(aboutMarquee, {
   scrollTrigger: {
     containerAnimation: pageScrollTween,
     trigger: aboutMarquee,
-    start: 'left left+=22%',
-    scrub: 1,
+    start: 'left left+=12%',
+    scrub: 0.5,
   },
 })
 

@@ -6,4 +6,102 @@
 
   width: 100vw;
   border-radius: unset;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact__title {
+  @extend %text-180;
+
+  text-align: center;
+  line-height: 0.9;
+  font-variation-settings: 'wght' 100;
+
+  span {
+    font-variation-settings: 'wght' 800;
+  }
+}
+
+.contact__button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 7rem auto 0;
+  position: relative;
+  width: fit-content;
+
+  &:hover {
+    .background {
+      width: 35rem;
+    }
+
+    .button1 {
+      transform: translateX(6rem);
+      background-color: transparent;
+    }
+
+    .button2 {
+      transform: translateX(-2rem);
+      background-color: transparent;
+    }
+
+    .button3 {
+      transform: rotate(0deg) translateX(-5rem);
+    }
+  }
+}
+
+.contact__button {
+  font-variation-settings: 'wght' 600;
+  color: $color-white;
+  background-color: $color-black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease-in-out;
+}
+
+.background {
+  background-color: $color-black;
+  border-radius: 10rem;
+  z-index: 1;
+  width: 14.6rem;
+  height: 11.8rem;
+  position: absolute;
+  left: 0;
+}
+
+.button1 {
+  border-radius: 10rem;
+  z-index: 2;
+  position: relative;
+  width: 14.6rem;
+  height: 11.8rem;
+}
+
+.button2 {
+  border-radius: 5rem;
+  z-index: 3;
+  position: relative;
+  width: 9rem;
+  height: 11.8rem;
+}
+
+.button3 {
+  border-radius: 5rem;
+  z-index: 2;
+  position: relative;
+  left: -2.9rem;
+  height: 6.1rem;
+  width: 11.8rem;
+  transform: rotate(-90deg);
+}
+
+.contact__copyright {
+  position: absolute;
+  bottom: 2rem;
+  left: 6rem;
 }

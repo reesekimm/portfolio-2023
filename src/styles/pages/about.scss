@@ -8,7 +8,7 @@
 }
 
 .about__image {
-  min-width: 30%;
+  min-width: 30vw;
   background-color: lightsalmon;
 }
 
@@ -16,6 +16,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-width: 0;
 }
 
 .about__marquee {
@@ -50,7 +51,7 @@
 }
 
 .about__item {
-  @extend %text-18;
+  @extend %text-16;
 
   width: 18vw;
   margin-right: 5rem;
