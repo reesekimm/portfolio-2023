@@ -7,9 +7,13 @@
   display: flex;
 }
 
-.about__image {
-  min-width: 30vw;
-  background-color: lightsalmon;
+.about__card {
+  width: 30vw;
+  height: 65%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: auto;
 }
 
 .about__content {
@@ -17,6 +21,7 @@
   flex-direction: column;
   justify-content: center;
   min-width: 0;
+  width: 70vw;
 }
 
 .about__marquee {

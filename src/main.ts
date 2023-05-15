@@ -1,6 +1,9 @@
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SplitType from 'split-type'
+import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import ProfileCard from './ProfileCard'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -80,13 +83,14 @@ const aboutMarquee = document.querySelector('.about__marquee')
 const aboutContainer = document.querySelector('.about__container')
 const aboutItems = document.querySelectorAll('.about__item')
 
-gsap.set(aboutMarquee, { x: -10 })
+gsap.set(aboutMarquee, { x: -100 })
 gsap.to(aboutMarquee, {
-  xPercent: -120,
+  xPercent: -100,
   scrollTrigger: {
     containerAnimation: pageScrollTween,
     trigger: aboutMarquee,
-    start: 'left left+=12%',
+    start: 'left left-=5%',
+    end: 'left left-=55%',
     scrub: 0.5,
   },
 })
@@ -104,6 +108,81 @@ gsap.from(aboutItems, {
     toggleActions: 'play none none reverse',
   },
 })
+
+const cardContainer = document.querySelector<HTMLDivElement>('.about__card')
+
+const renderProfileCard = () => {
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true,
+  })
+
+  const width = cardContainer.offsetWidth
+  const height = cardContainer.offsetHeight
+
+  renderer.setSize(width, height)
+  renderer.setPixelRatio(window.devicePixelRatio)
+
+  cardContainer?.appendChild(renderer.domElement)
+
+  const scene = new THREE.Scene()
+
+  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000)
+
+  camera.position.z = 25
+
+  const controls = new OrbitControls(camera, renderer.domElement)
+
+  controls.autoRotate = true
+  controls.autoRotateSpeed = 2.5
+  controls.rotateSpeed = 0.75
+  controls.enableDamping = true
+  controls.enableZoom = false
+  controls.minPolarAngle = Math.PI / 2 - Math.PI / 3
+  controls.maxPolarAngle = Math.PI / 2 + Math.PI / 3
+
+  const card = new ProfileCard({ width: 16, height: 22, radius: 0.5 })
+  card.mesh.rotation.z = Math.PI * 0.05
+
+  scene.add(card.mesh)
+
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1)
+  ambientLight.position.set(-5, -5, -5)
+
+  scene.add(ambientLight)
+
+  const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.3)
+  const directionalLight2 = directionalLight1.clone()
+
+  directionalLight1.position.set(1, 1, 3)
+  directionalLight2.position.set(-1, 1, -3)
+
+  scene.add(directionalLight1, directionalLight2)
+
+  function render() {
+    requestAnimationFrame(render)
+    controls.update()
+    renderer.render(scene, camera)
+  }
+
+  render()
+
+  function handleResize() {
+    const cardContainer = document.querySelector<HTMLDivElement>('.about__card')
+    const width = cardContainer?.offsetWidth
+    const height = cardContainer?.offsetHeight
+
+    camera.aspect = width / height
+    camera.updateProjectionMatrix()
+
+    renderer.setSize(width, height)
+    renderer.render(scene, camera)
+  }
+
+  window.addEventListener('resize', handleResize)
+}
+
+window.addEventListener('load', renderProfileCard)
 
 /**
  * Manifesto
