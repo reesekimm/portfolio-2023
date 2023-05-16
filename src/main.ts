@@ -89,7 +89,7 @@ gsap.to(aboutMarquee, {
   scrollTrigger: {
     containerAnimation: pageScrollTween,
     trigger: aboutMarquee,
-    start: 'left left-=5%',
+    start: 'left left',
     end: 'left left-=55%',
     scrub: 0.5,
   },
@@ -141,7 +141,7 @@ const renderProfileCard = () => {
   controls.minPolarAngle = Math.PI / 2 - Math.PI / 3
   controls.maxPolarAngle = Math.PI / 2 + Math.PI / 3
 
-  const card = new ProfileCard({ width: 16, height: 22, radius: 0.5 })
+  const card = new ProfileCard({ width: 18, height: 24, radius: 0.7 })
   card.mesh.rotation.z = Math.PI * 0.05
 
   scene.add(card.mesh)

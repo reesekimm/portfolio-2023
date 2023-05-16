@@ -8,7 +8,7 @@
 }
 
 .about__card {
-  width: 30vw;
+  width: 40vw;
   height: 65%;
   display: flex;
   flex-direction: column;
@@ -17,6 +17,9 @@
 }
 
 .about__content {
+  position: absolute;
+  left: 30vw;
+  bottom: 12vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -47,6 +50,8 @@
 
   font-variation-settings: 'wght' 600;
   margin: 5rem;
+  mix-blend-mode: difference;
+  color: $color-white;
 }
 
 .about__container {
