@@ -11,11 +11,11 @@ const pages = gsap.utils.toArray('.page')
 
 const pageScrollTween = gsap.to(pages, {
   xPercent: -100,
-  stagger: 0.6,
+  stagger: 0.5,
   ease: 'none',
   scrollTrigger: {
     trigger: '.main-container',
-    end: '+=550%',
+    end: '+=1200%',
     scrub: 0.5,
     pin: true,
   },
@@ -89,7 +89,7 @@ gsap.to(aboutMarquee, {
   scrollTrigger: {
     containerAnimation: pageScrollTween,
     trigger: aboutMarquee,
-    start: 'left left',
+    start: 'left left-=5%',
     end: 'left left-=55%',
     scrub: 0.5,
   },
@@ -194,8 +194,8 @@ const tlManifesto = gsap.timeline({
   scrollTrigger: {
     containerAnimation: pageScrollTween,
     trigger: '#page__about',
-    start: 'right 85%',
-    end: 'right 70%',
+    start: 'right 75%',
+    end: 'right 60%',
     scrub: 1,
   },
 })
