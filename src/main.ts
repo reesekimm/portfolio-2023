@@ -215,14 +215,15 @@ tlManifesto
   .fromTo(
     manifestoItems,
     {
-      translateX: (index) => `${index * 30 + 130}rem`,
+      translateX: (index: number) => `${index * 30 + 130}rem`,
     },
     {
       stagger: {
         from: 'end',
         each: 0.1,
       },
-      translateX: (index) => `-${(manifestoItems.length - index) * 10}rem`,
+      translateX: (index: number) =>
+        `-${(manifestoItems.length - index) * 10}rem`,
     },
     '<'
   )
