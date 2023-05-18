@@ -2,7 +2,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SplitType from 'split-type'
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import ProfileCard from './ProfileCard'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -109,13 +109,14 @@ gsap.from(aboutItems, {
   },
 })
 
-const cardContainer = document.querySelector<HTMLDivElement>('.about__card')
-
 const renderProfileCard = () => {
+  const cardContainer = document.querySelector<HTMLDivElement>('.about__card')
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true,
   })
+
+  if (!cardContainer) return
 
   const width = cardContainer.offsetWidth
   const height = cardContainer.offsetHeight
@@ -123,7 +124,7 @@ const renderProfileCard = () => {
   renderer.setSize(width, height)
   renderer.setPixelRatio(window.devicePixelRatio)
 
-  cardContainer?.appendChild(renderer.domElement)
+  cardContainer.appendChild(renderer.domElement)
 
   const scene = new THREE.Scene()
 
@@ -169,6 +170,9 @@ const renderProfileCard = () => {
 
   function handleResize() {
     const cardContainer = document.querySelector<HTMLDivElement>('.about__card')
+
+    if (!cardContainer) return
+
     const width = cardContainer?.offsetWidth
     const height = cardContainer?.offsetHeight
 
