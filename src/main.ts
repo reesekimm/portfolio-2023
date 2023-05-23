@@ -227,3 +227,48 @@ tlManifesto
     },
     '<'
   )
+
+/**
+ * Projects
+ */
+const tlProjects = gsap.timeline({
+  scrollTrigger: {
+    containerAnimation: pageScrollTween,
+    trigger: '#page__manifesto',
+    start: 'right center',
+    end: 'right 0',
+    scrub: 1,
+  },
+})
+
+tlProjects.fromTo(
+  '.preview__img-inner',
+  {
+    backgroundPosition: `0px 50%`,
+  },
+  {
+    backgroundPosition: `-${window.innerWidth / 10}px 50%`,
+  }
+)
+
+const previews = document.querySelectorAll('.project__preview')
+
+const hoverPreview = (event: Event, type: 'enter' | 'leave') => {
+  if (event.target instanceof HTMLElement) {
+    const targetPjt = event.target.closest('.project__preview')
+    const targetPjtPreviewImg = targetPjt?.querySelector('.preview__img-inner')
+
+    if (!targetPjtPreviewImg) return
+
+    gsap.to(targetPjtPreviewImg, {
+      duration: 0.7,
+      scale: type === 'enter' ? 1.2 : 1,
+      ease: 'ease',
+    })
+  }
+}
+
+previews.forEach((preview) => {
+  preview.addEventListener('mouseenter', (e) => hoverPreview(e, 'enter'))
+  preview.addEventListener('mouseleave', (e) => hoverPreview(e, 'leave'))
+})

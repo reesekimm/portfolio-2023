@@ -4,4 +4,87 @@
   color: $color-white;
   background-color: $color-black;
   z-index: 17;
+
+  overflow: hidden;
+}
+
+.project__previews {
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  display: flex;
+}
+
+.project__preview {
+  width: 60rem;
+  height: 40rem;
+  margin-right: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.preview__img-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.preview__img {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.preview__img-inner {
+  width: 100%;
+  height: 100%;
+  background-size: 150%;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
+
+#pjt-1 {
+  background-image: url(https://assets.website-files.com/62f4dd003ef1495b1bb8f3a0/62f4f6201cd426577274fab1_and-machines-SZd_V4A8gYo-unsplash.jpg);
+}
+
+#pjt-2 {
+  background-image: url(https://assets.website-files.com/62f4dd003ef1495b1bb8f3a0/62f4f62034d6a56dd03cced8_and-machines-odNU0f3jmUg-unsplash.jpg);
+}
+
+#pjt-3 {
+  background-image: url(https://assets.website-files.com/62f4dd003ef1495b1bb8f3a0/62f4f620dbc7f7e7db222488_and-machines-YLplJ9m_RKE-unsplash.jpg);
+}
+
+.project__title-preview {
+  @extend %text-40;
+
+  font-variation-settings: 'wght' 100;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.project__contents {
+  display: none;
+}
+
+.project__content {
+}
+
+.project__info {
+}
+
+.project__title-content {
+}
+
+.project__intro {
+}
+
+.project__details {
+}
+
+.project__links {
 }
