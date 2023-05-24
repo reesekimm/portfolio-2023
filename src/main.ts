@@ -1,11 +1,13 @@
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { Flip } from 'gsap/Flip'
 import SplitType from 'split-type'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import ProfileCard from './ProfileCard'
 
 gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(Flip)
 
 const pages = gsap.utils.toArray('.page')
 
@@ -251,7 +253,9 @@ tlProjects.fromTo(
   }
 )
 
-const previews = document.querySelectorAll('.project__preview')
+const previews = [...document.querySelectorAll('.project__preview')]
+const contents = [...document.querySelectorAll('.project__content')]
+const backButton = document.querySelector('.close')
 
 const hoverPreview = (event: Event, type: 'enter' | 'leave') => {
   if (event.target instanceof HTMLElement) {
@@ -268,7 +272,99 @@ const hoverPreview = (event: Event, type: 'enter' | 'leave') => {
   }
 }
 
+const ANIMATION_CONFIG = { duration: 1.5, ease: 'power3.inOut' }
+let targetPjtIndex = 0
+let targetPjt: Element | null = null
+let targetPjtPreviewImg: Element | null = null
+// let targetPjtContentImg: Element | null = null
+let adjacentItems = []
+
+const getAdjacentItems = (item: Element) =>
+  previews.reduce((items, curr, i) => {
+    if (i !== targetPjtIndex) items.push({ el: curr, index: i })
+    return items
+  }, [])
+
+const showContent = (event: Event) => {
+  if (!(event.target instanceof HTMLElement)) return
+
+  targetPjt = event.target.closest('.project__preview')
+
+  if (!targetPjt) return
+
+  targetPjtIndex = previews.indexOf(targetPjt)
+  targetPjtPreviewImg = targetPjt.querySelector('.preview__img')
+  adjacentItems = getAdjacentItems(targetPjt)
+
+  const tl = gsap
+    .timeline({
+      defaults: ANIMATION_CONFIG,
+      onStart: () => {
+        // content 영역 표시
+        gsap.set(contents[targetPjtIndex], {
+          zIndex: 5,
+          opacity: 1,
+        })
+      },
+    })
+    .addLabel('start')
+
+  // 인접한 previews 숨기기
+  for (const item of adjacentItems) {
+    tl.to(
+      item.el,
+      {
+        x: item.index < targetPjtIndex ? -window.innerWidth : window.innerWidth,
+      },
+      'start'
+    )
+  }
+
+  // flip images
+  tl.add(() => {
+    const state = Flip.getState(targetPjtPreviewImg)
+
+    contents[targetPjtIndex].insertAdjacentElement(
+      'afterbegin',
+      targetPjtPreviewImg
+    )
+
+    Flip.from(state, {
+      ...ANIMATION_CONFIG,
+      absolute: true,
+    })
+  }, 'start')
+
+  // back 버튼 표시
+  tl.to(
+    backButton,
+    {
+      zIndex: 5,
+      opacity: 1,
+    },
+    'start'
+  )
+
+  // preview title 숨기기
+  tl.to(
+    targetPjt?.querySelector('.project__title-preview'),
+    {
+      opacity: 0,
+    },
+    'start'
+  )
+}
+
+const hideContent = () => {
+  // back 버튼 숨기기
+  // content 숨기기
+  // 인접한 preview 표시
+}
+
 previews.forEach((preview) => {
   preview.addEventListener('mouseenter', (e) => hoverPreview(e, 'enter'))
   preview.addEventListener('mouseleave', (e) => hoverPreview(e, 'leave'))
+  preview.addEventListener('click', showContent)
 })
+
+backButton?.addEventListener('click', hideContent)
