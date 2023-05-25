@@ -267,15 +267,14 @@ const previewItems = previews.map(
 
 type AdjacentItemList = { element: Element; position: number }[]
 
-let currentPreviewItemIdx = -1
+let currentItemIdx = -1
 let adjacentItems: AdjacentItemList = []
-const init: AdjacentItemList = []
 
 const getAdjacentItems = () =>
   previews.reduce((items, curr, i) => {
-    if (i !== currentPreviewItemIdx) items.push({ element: curr, position: i })
+    if (i !== currentItemIdx) items.push({ element: curr, position: i })
     return items
-  }, init)
+  }, [])
 
 const showContent = (item: ProjectPreview) => {
   adjacentItems = getAdjacentItems()
@@ -285,9 +284,15 @@ const showContent = (item: ProjectPreview) => {
       defaults: ANIMATION_CONFIG,
       onStart: () => {
         // content 영역 표시
-        gsap.set(contents[currentPreviewItemIdx], {
+        gsap.set(contents[currentItemIdx], {
           zIndex: 5,
           opacity: 1,
+        })
+      },
+      onComplete: () => {
+        // inline style 제거 -> hideContent에서 Flip.from이 정상적으로 수행되기 위해 필요
+        gsap.set(previewItems[currentItemIdx].DOM.container, {
+          clearProps: 'all',
         })
       },
     })
@@ -299,7 +304,7 @@ const showContent = (item: ProjectPreview) => {
       item.element,
       {
         x:
-          item.position < currentPreviewItemIdx
+          item.position < currentItemIdx
             ? -window.innerWidth
             : window.innerWidth,
       },
@@ -309,11 +314,11 @@ const showContent = (item: ProjectPreview) => {
 
   // flip images
   tl.add(() => {
-    if (!item.DOM.image) return
+    if (!item.content.DOM.container || !item.DOM.image) return
 
     const state = Flip.getState(item.DOM.image)
 
-    contents[currentPreviewItemIdx].insertAdjacentElement(
+    item.content.DOM.container.insertAdjacentElement(
       'afterbegin',
       item.DOM.image
     )
@@ -345,15 +350,67 @@ const showContent = (item: ProjectPreview) => {
 }
 
 const hideContent = () => {
+  const item = previewItems[currentItemIdx]
+
+  const tl = gsap
+    .timeline({
+      defaults: ANIMATION_CONFIG,
+    })
+    .addLabel('start')
+
   // back 버튼 숨기기
-  // content 숨기기
+  tl.to(
+    backButton,
+    {
+      zIndex: 0,
+      opacity: 0,
+    },
+    'start'
+  )
+
   // 인접한 preview 표시
+  tl.to(
+    adjacentItems.map((item) => item.element),
+    {
+      x: 0,
+    },
+    'start'
+  )
+
+  // flip images
+  tl.add(() => {
+    const contentImage = item.content.DOM.container?.firstChild as Element
+    const flipstate = Flip.getState(contentImage)
+    item.DOM.imageWrapper?.insertAdjacentElement('afterbegin', contentImage)
+    Flip.from(flipstate, {
+      ...ANIMATION_CONFIG,
+      absolute: true,
+    })
+  }, 'start')
+
+  tl.to(
+    item.DOM.title,
+    {
+      opacity: 1,
+    },
+    'start'
+  )
+
+  // content 숨기기
+  tl.to(
+    contents[currentItemIdx],
+    {
+      zIndex: 0,
+      opacity: 0,
+    },
+    'start'
+  )
 }
 
 const initEvent = () => {
   for (const [position, item] of previewItems.entries()) {
     item.DOM.container?.addEventListener('click', () => {
-      currentPreviewItemIdx = position
+      currentItemIdx = position
       showContent(item)
     })
   }

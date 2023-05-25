@@ -3,6 +3,7 @@ import ProjectContent from './ProjectContent'
 
 interface ProjectPreviewDOM {
   container: Element | null
+  imageWrapper: Element | null
   image: Element | null
   imageInner: Element | null
   title: Element | null
@@ -16,6 +17,7 @@ interface ProjectPreviewProps {
 export default class ProjectPreview {
   DOM: ProjectPreviewDOM = {
     container: null,
+    imageWrapper: null,
     image: null,
     imageInner: null,
     title: null,
@@ -26,6 +28,7 @@ export default class ProjectPreview {
   constructor({ element, contentElement }: ProjectPreviewProps) {
     this.DOM = {
       container: element,
+      imageWrapper: element.querySelector('.preview__img-wrapper'),
       image: element.querySelector('.preview__img'),
       imageInner: element.querySelector('.preview__img-inner'),
       title: element.querySelector('.project__title-preview'),
