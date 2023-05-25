@@ -5,6 +5,7 @@ import SplitType from 'split-type'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import ProfileCard from './ProfileCard'
+import ProjectPreview from './components/ProjectPreview'
 
 gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(Flip)
@@ -253,55 +254,38 @@ tlProjects.fromTo(
   }
 )
 
+const ANIMATION_CONFIG = { duration: 1.5, ease: 'power3.inOut' }
+
 const previews = [...document.querySelectorAll('.project__preview')]
 const contents = [...document.querySelectorAll('.project__content')]
 const backButton = document.querySelector('.close')
 
-const hoverPreview = (event: Event, type: 'enter' | 'leave') => {
-  if (event.target instanceof HTMLElement) {
-    const targetPjt = event.target.closest('.project__preview')
-    const targetPjtPreviewImg = targetPjt?.querySelector('.preview__img-inner')
+const previewItems = previews.map(
+  (preview, index) =>
+    new ProjectPreview({ element: preview, contentElement: contents[index] })
+)
 
-    if (!targetPjtPreviewImg) return
+type AdjacentItemList = { element: Element; position: number }[]
 
-    gsap.to(targetPjtPreviewImg, {
-      duration: 0.7,
-      scale: type === 'enter' ? 1.2 : 1,
-      ease: 'ease',
-    })
-  }
-}
+let currentPreviewItemIdx = -1
+let adjacentItems: AdjacentItemList = []
+const init: AdjacentItemList = []
 
-const ANIMATION_CONFIG = { duration: 1.5, ease: 'power3.inOut' }
-let targetPjtIndex = 0
-let targetPjt: Element | null = null
-let targetPjtPreviewImg: Element | null = null
-// let targetPjtContentImg: Element | null = null
-let adjacentItems = []
-
-const getAdjacentItems = (item: Element) =>
+const getAdjacentItems = () =>
   previews.reduce((items, curr, i) => {
-    if (i !== targetPjtIndex) items.push({ el: curr, index: i })
+    if (i !== currentPreviewItemIdx) items.push({ element: curr, position: i })
     return items
-  }, [])
+  }, init)
 
-const showContent = (event: Event) => {
-  if (!(event.target instanceof HTMLElement)) return
-
-  targetPjt = event.target.closest('.project__preview')
-
-  if (!targetPjt) return
-
-  targetPjtIndex = previews.indexOf(targetPjt)
-  targetPjtPreviewImg = targetPjt.querySelector('.preview__img')
-  adjacentItems = getAdjacentItems(targetPjt)
+const showContent = (item: ProjectPreview) => {
+  adjacentItems = getAdjacentItems()
 
   const tl = gsap
     .timeline({
       defaults: ANIMATION_CONFIG,
       onStart: () => {
         // content 영역 표시
-        gsap.set(contents[targetPjtIndex], {
+        gsap.set(contents[currentPreviewItemIdx], {
           zIndex: 5,
           opacity: 1,
         })
@@ -312,9 +296,12 @@ const showContent = (event: Event) => {
   // 인접한 previews 숨기기
   for (const item of adjacentItems) {
     tl.to(
-      item.el,
+      item.element,
       {
-        x: item.index < targetPjtIndex ? -window.innerWidth : window.innerWidth,
+        x:
+          item.position < currentPreviewItemIdx
+            ? -window.innerWidth
+            : window.innerWidth,
       },
       'start'
     )
@@ -322,11 +309,13 @@ const showContent = (event: Event) => {
 
   // flip images
   tl.add(() => {
-    const state = Flip.getState(targetPjtPreviewImg)
+    if (!item.DOM.image) return
 
-    contents[targetPjtIndex].insertAdjacentElement(
+    const state = Flip.getState(item.DOM.image)
+
+    contents[currentPreviewItemIdx].insertAdjacentElement(
       'afterbegin',
-      targetPjtPreviewImg
+      item.DOM.image
     )
 
     Flip.from(state, {
@@ -347,7 +336,7 @@ const showContent = (event: Event) => {
 
   // preview title 숨기기
   tl.to(
-    targetPjt?.querySelector('.project__title-preview'),
+    item.DOM.title,
     {
       opacity: 0,
     },
@@ -361,10 +350,15 @@ const hideContent = () => {
   // 인접한 preview 표시
 }
 
-previews.forEach((preview) => {
-  preview.addEventListener('mouseenter', (e) => hoverPreview(e, 'enter'))
-  preview.addEventListener('mouseleave', (e) => hoverPreview(e, 'leave'))
-  preview.addEventListener('click', showContent)
-})
+const initEvent = () => {
+  for (const [position, item] of previewItems.entries()) {
+    item.DOM.container?.addEventListener('click', () => {
+      currentPreviewItemIdx = position
+      showContent(item)
+    })
+  }
 
-backButton?.addEventListener('click', hideContent)
+  backButton?.addEventListener('click', hideContent)
+}
+
+initEvent()
