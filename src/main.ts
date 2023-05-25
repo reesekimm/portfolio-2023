@@ -254,7 +254,7 @@ tlProjects.fromTo(
   }
 )
 
-const ANIMATION_CONFIG = { duration: 1.5, ease: 'power3.inOut' }
+const ANIMATION_CONFIG = { duration: 1.5, ease: 'power4.inOut' }
 
 const previews = [...document.querySelectorAll('.project__preview')]
 const contents = [...document.querySelectorAll('.project__content')]
@@ -328,25 +328,36 @@ const showContent = (item: ProjectPreview) => {
       absolute: true,
     })
   }, 'start')
-
-  // back 버튼 표시
-  tl.to(
-    backButton,
-    {
-      zIndex: 5,
-      opacity: 1,
-    },
-    'start'
-  )
-
-  // preview title 숨기기
-  tl.to(
-    item.DOM.title,
-    {
-      opacity: 0,
-    },
-    'start'
-  )
+    // preview title 숨기기
+    .to(
+      item.DOM.title,
+      {
+        yPercent: 100,
+      },
+      'start'
+    )
+    .addLabel('content', 0.4)
+    .fromTo(
+      [item.content.DOM.titleInner, item.content.DOM.introInner],
+      {
+        yPercent: 100,
+        opacity: 0,
+      },
+      {
+        yPercent: 0,
+        opacity: 1,
+        stagger: 0.05,
+      },
+      'content'
+    )
+    .to(
+      backButton,
+      {
+        zIndex: 5,
+        opacity: 1,
+      },
+      'content'
+    )
 }
 
 const hideContent = () => {
@@ -357,16 +368,23 @@ const hideContent = () => {
       defaults: ANIMATION_CONFIG,
     })
     .addLabel('start')
-
-  // back 버튼 숨기기
-  tl.to(
-    backButton,
-    {
-      zIndex: 0,
-      opacity: 0,
-    },
-    'start'
-  )
+    .to(
+      backButton,
+      {
+        zIndex: 0,
+        opacity: 0,
+      },
+      'start'
+    )
+    .to(
+      [item.content.DOM.titleInner, item.content.DOM.introInner],
+      {
+        yPercent: 100,
+        opacity: 0,
+        stagger: 0.05,
+      },
+      'start'
+    )
 
   // 인접한 preview 표시
   tl.to(
@@ -388,20 +406,22 @@ const hideContent = () => {
     })
   }, 'start')
 
-  tl.to(
-    item.DOM.title,
-    {
-      opacity: 1,
-    },
-    'start'
-  )
-
   // content 숨기기
   tl.to(
     contents[currentItemIdx],
     {
       zIndex: 0,
       opacity: 0,
+    },
+    'start'
+  )
+
+  // preview title 표시
+  tl.to(
+    item.DOM.title,
+    {
+      ...ANIMATION_CONFIG,
+      yPercent: 0,
     },
     'start'
   )

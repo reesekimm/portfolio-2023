@@ -1,8 +1,8 @@
 interface ProjectContentDOM {
   container: Element | null
   links: Element | null
-  title: Element | null
-  intro: Element | null
+  titleInner: NodeListOf<Element> | null
+  introInner: NodeListOf<Element> | null
   details: Element | null
 }
 
@@ -10,8 +10,8 @@ export default class ProjectContent {
   DOM: ProjectContentDOM = {
     container: null,
     links: null,
-    title: null,
-    intro: null,
+    titleInner: null,
+    introInner: null,
     details: null,
   }
 
@@ -19,8 +19,8 @@ export default class ProjectContent {
     this.DOM = {
       container: element,
       links: element.querySelector('.project__links'),
-      title: element.querySelector('.project__title-content'),
-      intro: element.querySelector('.project__intro'),
+      titleInner: element.querySelectorAll('.title-inner'),
+      introInner: element.querySelectorAll('.intro-inner'),
       details: element.querySelector('.project__details'),
     }
   }

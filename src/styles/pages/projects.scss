@@ -107,12 +107,24 @@
 .project__title-content {
   @extend %text-50;
 
-  opacity: 0;
   font-variation-settings: 'wght' 800;
+
+  span {
+    display: block;
+  }
+}
+
+.title-wrapper,
+.intro-wrapper {
+  overflow: hidden;
 }
 
 .project__intro {
-  opacity: 0;
+  margin-top: 2rem;
+
+  span {
+    display: block;
+  }
 }
 
 .project__details {
