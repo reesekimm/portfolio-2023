@@ -4,7 +4,7 @@ import { Flip } from 'gsap/Flip'
 import SplitType from 'split-type'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import ProfileCard from './ProfileCard'
+import ProfileCard from './components/ProfileCard'
 import ProjectPreview from './components/ProjectPreview'
 
 gsap.registerPlugin(ScrollTrigger)
