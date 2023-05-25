@@ -85,7 +85,7 @@
   gap: 3rem;
   grid-template-columns: 2fr 1fr;
   grid-template-rows: 1.5fr 1fr;
-  grid-template-areas: 'image info' 'links info';
+  grid-template-areas: 'image info' 'details details';
 
   opacity: 0;
 }
@@ -95,9 +95,6 @@
 }
 
 .project__links {
-  grid-area: links;
-
-  opacity: 0;
 }
 
 .project__info {
@@ -128,7 +125,7 @@
 }
 
 .project__details {
-  opacity: 0;
+  grid-area: details;
 }
 
 .close {
