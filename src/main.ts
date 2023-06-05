@@ -297,6 +297,14 @@ const showContent = (item: ProjectPreview) => {
       },
     })
     .addLabel('start')
+    // preview title 숨기기
+    .to(
+      item.DOM.title,
+      {
+        yPercent: 100,
+      },
+      'start'
+    )
 
   // 인접한 previews 숨기기
   for (const item of adjacentItems) {
@@ -328,15 +336,9 @@ const showContent = (item: ProjectPreview) => {
       absolute: true,
     })
   }, 'start')
-    // preview title 숨기기
-    .to(
-      item.DOM.title,
-      {
-        yPercent: 100,
-      },
-      'start'
-    )
-    .addLabel('content', 0.4)
+
+  tl.addLabel('content', 0.4)
+    // 프로젝트 title 표시
     .fromTo(
       [item.content.DOM.titleInner, item.content.DOM.introInner],
       {
@@ -350,6 +352,49 @@ const showContent = (item: ProjectPreview) => {
       },
       'content'
     )
+    // 프로젝트 링크 섹션 타이틀 표시
+    .fromTo(
+      item.content.DOM.linkSectionTitles,
+      {
+        yPercent: 100,
+        opacity: 0,
+      },
+      {
+        yPercent: 0,
+        opacity: 1,
+        stagger: 0.05,
+      },
+      'content'
+    )
+    // 프로젝트 링크 표시
+    .fromTo(
+      item.content.DOM.links,
+      {
+        yPercent: 100,
+        opacity: 0,
+      },
+      {
+        yPercent: 0,
+        opacity: 1,
+        stagger: 0.05,
+      },
+      'content'
+    )
+    // 프로젝트 상세 표시
+    .fromTo(
+      item.content.DOM.details,
+      {
+        yPercent: 100,
+        opacity: 0,
+      },
+      {
+        yPercent: 0,
+        opacity: 1,
+        stagger: 0.05,
+      },
+      'content'
+    )
+    // 돌아가기 버튼 표시
     .to(
       backButton,
       {
@@ -368,14 +413,7 @@ const hideContent = () => {
       defaults: ANIMATION_CONFIG,
     })
     .addLabel('start')
-    .to(
-      backButton,
-      {
-        zIndex: 0,
-        opacity: 0,
-      },
-      'start'
-    )
+    // 프로젝트 타이틀 숨기기
     .to(
       [item.content.DOM.titleInner, item.content.DOM.introInner],
       {
@@ -385,21 +423,44 @@ const hideContent = () => {
       },
       'start'
     )
-
-  // 인접한 preview 표시
-  tl.to(
-    adjacentItems.map((item) => item.element),
-    {
-      x: 0,
-    },
-    'start'
-  )
+    // 프로젝트 링크 섹션 타이틀 숨기기
+    .to(
+      item.content.DOM.linkSectionTitles,
+      {
+        yPercent: 100,
+        opacity: 0,
+        stagger: 0.05,
+      },
+      'start'
+    )
+    // 프로젝트 링크 숨기기
+    .to(
+      item.content.DOM.links,
+      {
+        yPercent: 100,
+        opacity: 0,
+        stagger: 0.05,
+      },
+      'start'
+    )
+    // 프로젝트 상세 숨기기
+    .to(
+      item.content.DOM.details,
+      {
+        yPercent: 100,
+        opacity: 0,
+        stagger: 0.05,
+      },
+      'start'
+    )
 
   // flip images
   tl.add(() => {
     const contentImage = item.content.DOM.container?.firstChild as Element
     const flipstate = Flip.getState(contentImage)
+
     item.DOM.imageWrapper?.insertAdjacentElement('afterbegin', contentImage)
+
     Flip.from(flipstate, {
       ...ANIMATION_CONFIG,
       absolute: true,
@@ -415,16 +476,33 @@ const hideContent = () => {
     },
     'start'
   )
+    // 돌아가기 버튼 숨기기
+    .to(
+      backButton,
+      {
+        zIndex: 0,
+        opacity: 0,
+      },
+      'start'
+    )
 
-  // preview title 표시
+  // 인접한 preview 표시
   tl.to(
-    item.DOM.title,
+    adjacentItems.map((item) => item.element),
     {
-      ...ANIMATION_CONFIG,
-      yPercent: 0,
+      x: 0,
     },
-    'start'
+    'start+=0.2'
   )
+    // preview title 표시
+    .to(
+      item.DOM.title,
+      {
+        ...ANIMATION_CONFIG,
+        yPercent: 0,
+      },
+      'start+=0.2'
+    )
 }
 
 const initEvent = () => {

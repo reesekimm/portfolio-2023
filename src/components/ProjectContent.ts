@@ -1,14 +1,16 @@
 interface ProjectContentDOM {
   container: Element | null
-  links: Element | null
+  linkSectionTitles: NodeListOf<Element> | null
+  links: NodeListOf<Element> | null
   titleInner: NodeListOf<Element> | null
   introInner: NodeListOf<Element> | null
-  details: Element | null
+  details: NodeListOf<Element> | null
 }
 
 export default class ProjectContent {
   DOM: ProjectContentDOM = {
     container: null,
+    linkSectionTitles: null,
     links: null,
     titleInner: null,
     introInner: null,
@@ -18,10 +20,13 @@ export default class ProjectContent {
   constructor(element: Element) {
     this.DOM = {
       container: element,
-      links: element.querySelector('.project__links'),
+      linkSectionTitles: element.querySelectorAll(
+        '.project__link-section-wrapper'
+      ),
+      links: element.querySelectorAll('.project__link'),
       titleInner: element.querySelectorAll('.title-inner'),
       introInner: element.querySelectorAll('.intro-inner'),
-      details: element.querySelector('.project__details'),
+      details: element.querySelectorAll('.detail-inner'),
     }
   }
 }
