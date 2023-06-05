@@ -101,13 +101,13 @@ gsap.to(aboutMarquee, {
 gsap.from(aboutItems, {
   y: -50,
   opacity: 0,
-  duration: 1.5,
+  duration: 3,
   ease: 'elastic',
   stagger: 0.1,
   scrollTrigger: {
     containerAnimation: pageScrollTween,
     trigger: aboutContainer,
-    start: 'left left+=20%',
+    start: 'left left+=10%',
     toggleActions: 'play none none reverse',
   },
 })
