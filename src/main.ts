@@ -274,7 +274,7 @@ const getAdjacentItems = () =>
   previews.reduce((items, curr, i) => {
     if (i !== currentItemIdx) items.push({ element: curr, position: i })
     return items
-  }, [])
+  }, [] as AdjacentItemList)
 
 const showContent = (item: ProjectPreview) => {
   adjacentItems = getAdjacentItems()
