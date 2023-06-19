@@ -1,5 +1,7 @@
 interface ProjectContentDOM {
   container: Element | null
+  period: Element | null
+  stacks: NodeListOf<Element> | null
   linkSectionTitles: NodeListOf<Element> | null
   links: NodeListOf<Element> | null
   titleInner: NodeListOf<Element> | null
@@ -10,6 +12,8 @@ interface ProjectContentDOM {
 export default class ProjectContent {
   DOM: ProjectContentDOM = {
     container: null,
+    period: null,
+    stacks: null,
     linkSectionTitles: null,
     links: null,
     titleInner: null,
@@ -20,6 +24,8 @@ export default class ProjectContent {
   constructor(element: Element) {
     this.DOM = {
       container: element,
+      period: element.querySelector('.period-inner'),
+      stacks: element.querySelectorAll('.stack'),
       linkSectionTitles: element.querySelectorAll(
         '.project__link-section-wrapper'
       ),

@@ -218,7 +218,7 @@ tlManifesto
   .fromTo(
     manifestoItems,
     {
-      translateX: (index: number) => `${index * 30 + 130}rem`,
+      translateX: (index: number) => `${index * 30 + 150}rem`,
     },
     {
       stagger: {
@@ -226,7 +226,7 @@ tlManifesto
         each: 0.1,
       },
       translateX: (index: number) =>
-        `-${(manifestoItems.length - index) * 10}rem`,
+        `-${(manifestoItems.length - index) * 15}rem`,
     },
     '<'
   )
@@ -234,26 +234,6 @@ tlManifesto
 /**
  * Projects
  */
-const tlProjects = gsap.timeline({
-  scrollTrigger: {
-    containerAnimation: pageScrollTween,
-    trigger: '#page__manifesto',
-    start: 'right center',
-    end: 'right 0',
-    scrub: 1,
-  },
-})
-
-tlProjects.fromTo(
-  '.preview__img-inner',
-  {
-    backgroundPosition: `0px 50%`,
-  },
-  {
-    backgroundPosition: `-${window.innerWidth / 10}px 50%`,
-  }
-)
-
 const ANIMATION_CONFIG = { duration: 1.5, ease: 'power4.inOut' }
 
 const previews = [...document.querySelectorAll('.project__preview')]
@@ -338,7 +318,20 @@ const showContent = (item: ProjectPreview) => {
   }, 'start')
 
   tl.addLabel('content', 0.4)
-    // 프로젝트 title 표시
+    // 프로젝트 기간 표시
+    .fromTo(
+      item.content.DOM.period,
+      {
+        yPercent: 100,
+        opacity: 0,
+      },
+      {
+        yPercent: 0,
+        opacity: 1,
+      },
+      'content'
+    )
+    // 프로젝트 타이틀 표시
     .fromTo(
       [item.content.DOM.titleInner, item.content.DOM.introInner],
       {
@@ -349,6 +342,20 @@ const showContent = (item: ProjectPreview) => {
         yPercent: 0,
         opacity: 1,
         stagger: 0.05,
+      },
+      'content'
+    )
+    // 사용 기술 표시
+    .fromTo(
+      item.content.DOM.stacks,
+      {
+        yPercent: 100,
+        opacity: 0,
+      },
+      {
+        yPercent: 0,
+        opacity: 1,
+        stagger: 0.02,
       },
       'content'
     )
@@ -413,6 +420,14 @@ const hideContent = () => {
       defaults: ANIMATION_CONFIG,
     })
     .addLabel('start')
+    .to(
+      item.content.DOM.period,
+      {
+        yPercent: 100,
+        opacity: 0,
+      },
+      'start'
+    )
     // 프로젝트 타이틀 숨기기
     .to(
       [item.content.DOM.titleInner, item.content.DOM.introInner],
@@ -420,6 +435,16 @@ const hideContent = () => {
         yPercent: 100,
         opacity: 0,
         stagger: 0.05,
+      },
+      'start'
+    )
+    // 사용 기술 숨기기
+    .to(
+      item.content.DOM.stacks,
+      {
+        yPercent: 100,
+        opacity: 0,
+        stagger: 0.02,
       },
       'start'
     )
